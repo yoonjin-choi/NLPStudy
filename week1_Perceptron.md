@@ -16,7 +16,7 @@
 - 어떻게 각 노드의 weight와 bias 를 업데이트 할 것인가?
   -> 미분의 연쇄법칙( Chain Rule) 을 이용.
   
-  <img src="img/back.PNG">
+  <img src="img/back2.PNG">
 - pyTorch의 ``cost.backward() `` 통해 실행.
 
 # RELU activation
