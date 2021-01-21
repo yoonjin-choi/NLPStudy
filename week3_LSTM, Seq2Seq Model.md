@@ -63,8 +63,6 @@
 - Decoder의 첫 입력으로 문장의 시작을 의미하는 심볼( < s >, < sos >) 이 들어가고 , Decoder의 첫번째 RNN 셀은 context vector와 < s > 두 개의 입력을 바탕으로 새로운 hidden state $h_{1}$ 계산 후, Affine(feed forward) 계층과 softmax계층을 거쳐 다음 등장할 확률이 높은 단어('안녕하세요')를 예측.
 - 다음 RNN셀은 전 timestep에서 계산된 $h_{1}$과 예측한 단어('안녕하세요')를 입력으로 2번째 예측 수행.
 - 문장의 끝을 의미하는 symbol(< /s >, < eos > 등) 이 예측될 때까지 반복.
-> 설명참조 :[seq2seq Model](https://m.blog.naver.com/PostView.nhn?blogId=sooftware&logNo=221784419691&proxyReferer=https://www.google.com/)
-, [LSTM](https://wikidocs.net/45101)
 
 ## 4. Attention Mechanism
  - Seq2Seq의 한계점
@@ -99,6 +97,7 @@
 	 
 ![enter image description here](https://postfiles.pstatic.net/MjAyMDAxMjVfMjM2/MDAxNTc5ODg5NjkzMjAy.-nH6VxdzQQU4ZSQY-09AVaq_8WKfy2Ox1LhpsQeuQ0Ag.jTicYxSxPvM6AeN1AGEHjuPCc5uOAOP-tp7qS18isoog.PNG.sooftware/image.png?type=w773)
 	
+
 > 참조 :[seq2seq Model](https://m.blog.naver.com/PostView.nhn?blogId=sooftware&logNo=221784419691&proxyReferer=https://www.google.com/)
 , [LSTM](https://wikidocs.net/45101)
 [Attention mechanism 출처](https://blog.naver.com/sooftware/221784472231)
