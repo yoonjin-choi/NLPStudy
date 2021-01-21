@@ -65,3 +65,40 @@
 - 문장의 끝을 의미하는 symbol(< /s >, < eos > 등) 이 예측될 때까지 반복.
 > 설명참조 :[seq2seq Model](https://m.blog.naver.com/PostView.nhn?blogId=sooftware&logNo=221784419691&proxyReferer=https://www.google.com/)
 , [LSTM](https://wikidocs.net/45101)
+
+## 4. Attention Mechanism
+ - Seq2Seq의 한계점
+	 1. encoder에서 하나의 고정된 크기 벡터에 정보를 압축하여 정보 손실 발생.
+	 2.  RNN의 고질적 문제인 Vanishing Gradient Problem.
+	 
+- Attention mechanism ?
+	seq2seq 구조에서 Encoder에서 계산한 여러 Hiddenstate 중 마지막 Hiddenstate만을 Decoder에서 사용되지 않는데 , **사용되지 않은 Hidden State**를 이용한다.
+	즉, Decoder에서 출력을 예측하는 매 timestep 마다 Encoder의 Hidden state를 다시 한 번 참조하는데,
+	해당 timestep에서 예측해야하는 결과와 연관있는 부분을 판단하여 비율을 더 **집중** 시킨다.
+> 어느 인코더의 **Hidden State**를 얼마나 참고할지 결정하는 것이 핵심!
+- **Dot-product Attention** (가장 기본적 Attention)의 Step
+ 1. 현 시점 디코더의 Hidden State와 인코더의 모든 Hidden state들과 각각 내적(dot product) 수행, 그 결과는 scalar 값 => Attention Score(어텐션 스코어)   
+ 
+![enter image description here](https://blogfiles.pstatic.net/MjAyMDAxMjVfODYg/MDAxNTc5ODg3OTY2MjI2.Z7Lu2gOy8dU_B143Iyzs-yvQVIknQyHpfAwfXJYrsLEg.hZle2mnoLTKWAhapEiE9nCQisfUe4PbzxRhODi8Vdtsg.PNG.sooftware/image.png)
+ 2. 그렇게 나온 scalar에 대해 softmax 함수 적용하여 attention 의 분포(각 encoder hidden state의 중요도) 구함.
+
+![enter image description here](https://blogfiles.pstatic.net/MjAyMDAxMjVfMTIg/MDAxNTc5ODg4NDkxMDQz.miNLNdmdj0t3Ll12purypbOIE6PWRFijlxAF4ci5K28g.c-UT98v0QJumGmehmlwGkQ0bQxxV_jCKOCjOVH17ZcYg.PNG.sooftware/image.png)
+	 (예) e0 : 2%, e0 : 18%, e0 : 50%, e0 : 25%, e0 : 5%
+
+3. attention의 분포를 각 encoder의 hidden state와 곱해준다.
+ ![enter image description here](https://blogfiles.pstatic.net/MjAyMDAxMjVfMjAy/MDAxNTc5ODg5MDU0ODE0.4Xwd762CrmUZ6sWY_IFoddKsPOrDm4v55c-b0JU-PXEg.cFn2Pmagh6s_lLgfXbkPdY2_O4gCOLqSKQf3yHwds6Mg.PNG.sooftware/image.png)
+
+4. 3번에서 곱을 통해 얻어진 hidden state들을 전부 더해준 것 => Context Vector(컨텍스트 벡터)
+5. 4에서 구한 Context vector와 현 시점 decoder의 hidden state와 연결(concatenate)하여 벡터 구함.
+6.  5에서 구한 벡터를 바탕으로 최종 값 계산.
+
+  ![enter image description here](https://blogfiles.pstatic.net/MjAyMDAxMjVfMTE5/MDAxNTc5ODg3ODE3MjE2.qoAGM2HdLouYzpNv8zjR9tjKAatY1h_MyOh6KLWCN70g.XhC_2dkTliEKeD4DiDAe6HqBV_rVnjqhQbXs3pYxf2wg.PNG.sooftware/image.png)
+
+- 다양한 종류의 Attention 
+	 - Attention Score을 계산하는 방식(1번 단계)에서 차이가 있음!
+	 
+![enter image description here](https://postfiles.pstatic.net/MjAyMDAxMjVfMjM2/MDAxNTc5ODg5NjkzMjAy.-nH6VxdzQQU4ZSQY-09AVaq_8WKfy2Ox1LhpsQeuQ0Ag.jTicYxSxPvM6AeN1AGEHjuPCc5uOAOP-tp7qS18isoog.PNG.sooftware/image.png?type=w773)
+	
+> 참조 :[seq2seq Model](https://m.blog.naver.com/PostView.nhn?blogId=sooftware&logNo=221784419691&proxyReferer=https://www.google.com/)
+, [LSTM](https://wikidocs.net/45101)
+[Attention mechanism 출처](https://blog.naver.com/sooftware/221784472231)
